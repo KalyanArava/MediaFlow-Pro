@@ -134,8 +134,21 @@ def api_task_file(task_id):
 
 @app.route('/api/status')
 def api_status():
+    import os
     import shutil
     import sys
+    from pathlib import Path
+
+    base = Path(__file__).resolve().parent
+    deno_file = base / 'bin' / 'deno'
+
+    try:
+        import imageio_ffmpeg
+        bundled_ffmpeg = imageio_ffmpeg.get_ffmpeg_exe()
+        bundled_ffmpeg_exists = Path(bundled_ffmpeg).is_file()
+    except Exception as e:
+        bundled_ffmpeg = ''
+        bundled_ffmpeg_exists = False
 
     return jsonify({
         'ok': True,
@@ -145,22 +158,26 @@ def api_status():
             'yt_dlp': True,
             'yt_dlp_ejs': True,
 
-            'node': bool(shutil.which('node')),
-            'node_path': shutil.which('node') or '',
+            'system_node': bool(shutil.which('node')),
+            'system_node_path': shutil.which('node') or '',
 
-            'deno': bool(shutil.which('deno')),
-            'deno_path': shutil.which('deno') or '',
+            'system_deno': bool(shutil.which('deno')),
+            'system_deno_path': shutil.which('deno') or '',
 
-            'ffmpeg': bool(shutil.which('ffmpeg')),
-            'ffmpeg_path': shutil.which('ffmpeg') or '',
+            'bundled_deno_exists': deno_file.is_file(),
+            'bundled_deno_path': str(deno_file),
+            'bundled_deno_executable': os.access(deno_file, os.X_OK),
 
-            'ffprobe': bool(shutil.which('ffprobe')),
-            'ffprobe_path': shutil.which('ffprobe') or '',
+            'system_ffmpeg': bool(shutil.which('ffmpeg')),
+            'system_ffmpeg_path': shutil.which('ffmpeg') or '',
+
+            'bundled_ffmpeg_exists': bundled_ffmpeg_exists,
+            'bundled_ffmpeg_path': bundled_ffmpeg,
+
+            'system_ffprobe': bool(shutil.which('ffprobe')),
+            'system_ffprobe_path': shutil.which('ffprobe') or '',
 
             'internet': True,
             'storage': True
         }
     })
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=False)
