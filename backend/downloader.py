@@ -140,6 +140,12 @@ class DownloadManager:
                 'quiet': True,
                 'no_warnings': False,
             }
+            # Vercel does not provide a system FFmpeg binary.
+            # imageio-ffmpeg supplies a bundled FFmpeg executable.
+            if os.environ.get('VERCEL'):
+                import imageio_ffmpeg
+                opts['ffmpeg_location'] = imageio_ffmpeg.get_ffmpeg_exe()
+
             if kind in ('thumbnail', 'all'):
                 opts['writethumbnail'] = True
 
