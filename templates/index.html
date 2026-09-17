@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MediaFlow — Download. Save. Enjoy.</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand"><div class="brand-mark"><i class="fa-solid fa-play"></i></div><div><div class="brand-name">MediaFlow</div><div class="brand-sub">Download. Save. Enjoy.</div></div></div>
+    <nav class="nav flex-column mt-4">
+      <button class="nav-link active" data-section="dashboard"><i class="fa-solid fa-house"></i> Dashboard</button>
+      <button class="nav-link" data-section="youtube"><i class="fa-brands fa-youtube"></i> YouTube</button>
+      <button class="nav-link" data-section="instagram"><i class="fa-brands fa-instagram"></i> Instagram</button>
+      <button class="nav-link" data-section="batch"><i class="fa-solid fa-layer-group"></i> Batch Download</button>
+      <button class="nav-link" data-section="queue"><i class="fa-solid fa-list"></i> Queue</button>
+      <button class="nav-link" data-section="downloads"><i class="fa-solid fa-download"></i> Downloads</button>
+      <button class="nav-link" data-section="history"><i class="fa-solid fa-clock-rotate-left"></i> History</button>
+      <button class="nav-link" data-section="settings"><i class="fa-solid fa-gear"></i> Settings</button>
+      <button class="nav-link" data-section="tools"><i class="fa-solid fa-screwdriver-wrench"></i> Tools</button>
+      <button class="nav-link" data-section="about"><i class="fa-solid fa-circle-info"></i> About</button>
+    </nav>
+    <div class="sidebar-bottom"><span>v1.0.0</span><span class="ready"><i class="fa-solid fa-circle"></i> Ready</span></div>
+  </aside>
+
+  <main class="main-content">
+    <header class="topbar">
+      <div class="mobile-brand"><span class="brand-mark mini"><i class="fa-solid fa-play"></i></span> MediaFlow</div>
+      <div class="top-actions"><button class="icon-btn" id="themeBtn" title="Theme"><i class="fa-solid fa-sun"></i></button><div class="profile"><div class="avatar">K</div><div><b>Kalyan</b><small>MCA • VRN College</small></div><i class="fa-solid fa-chevron-down"></i></div></div>
+    </header>
+
+    <section id="dashboard" class="section active-section">
+      <div class="url-bar glass">
+        <i class="fa-solid fa-link"></i><input id="urlInput" placeholder="Paste YouTube or Instagram URL here..." autocomplete="off"><button id="analyzeBtn" class="primary-btn"><i class="fa-solid fa-wand-magic-sparkles"></i> Analyze</button>
+      </div>
+      <div class="hero glass"><div><h1>Download Your Favorite Media</h1><p>YouTube <span>•</span> Instagram <span>•</span> Reels <span>•</span> Videos <span>•</span> Images <span>•</span> Audio</p></div><div class="scribble">Save<br>Explore<br>Enjoy</div></div>
+
+      <div class="grid-two">
+        <div class="glass card"><h3>Platform</h3><div class="option-row"><button class="platform-option selected" data-platform="youtube"><i class="fa-brands fa-youtube"></i><span><b>YouTube</b><small>Videos, Music, Playlists</small></span></button><button class="platform-option" data-platform="instagram"><i class="fa-brands fa-instagram"></i><span><b>Instagram</b><small>Reels, Posts, Stories</small></span></button></div></div>
+        <div class="glass card"><h3>Download Type</h3><div class="option-row compact"><button class="type-option selected" data-kind="video"><i class="fa-solid fa-video"></i><span>Video</span></button><button class="type-option" data-kind="audio"><i class="fa-solid fa-music"></i><span>Audio</span></button><button class="type-option" data-kind="thumbnail"><i class="fa-regular fa-image"></i><span>Thumbnail</span></button><button class="type-option" data-kind="all"><i class="fa-solid fa-layer-group"></i><span>All</span></button></div></div>
+      </div>
+
+      <div class="grid-two quality-row">
+        <div class="glass card"><h3>Quality</h3><div class="quality-options"><button class="quality selected" data-quality="best">★<b>Best</b></button><button class="quality" data-quality="2160p"><b>4K</b><small>2160p</small></button><button class="quality" data-quality="1440p"><b>2K</b><small>1440p</small></button><button class="quality" data-quality="1080p"><b>1080p</b><small>Full HD</small></button><button class="quality" data-quality="720p"><b>720p</b><small>HD</small></button><button class="quality" data-quality="480p"><b>480p</b></button><button class="quality" data-quality="360p"><b>360p</b></button></div></div>
+        <div class="glass card location"><h3>Save Location</h3><div class="location-box"><i class="fa-regular fa-folder-open"></i><span>Project downloads folder</span><button id="locationBtn" class="ghost-btn" type="button" title="Downloads are stored in the configured MediaFlow folder">Default</button></div></div>
+      </div>
+
+      <div class="action-row"><button id="downloadBtn" class="download-btn"><i class="fa-solid fa-download"></i> Download Now</button><button id="queueBtn" class="secondary-btn"><i class="fa-solid fa-list"></i> Add to Queue</button><button id="refreshBtn" class="icon-btn" title="Reset"><i class="fa-solid fa-rotate"></i></button><button class="icon-btn" onclick="showSection('settings')"><i class="fa-solid fa-gear"></i></button></div>
+
+      <div class="grid-main">
+        <div class="left-col">
+          <div class="glass card preview-card"><div class="card-title"><h3>Preview</h3></div><div id="previewEmpty" class="empty-preview"><i class="fa-regular fa-image"></i><p>Analyze a URL to preview media</p></div><div id="previewData" class="preview-content hidden"><img id="thumb" src="" alt="Thumbnail"><div class="preview-text"><h2 id="mediaTitle">—</h2><div id="platformLabel" class="muted">—</div><div class="chips"><span id="durationChip">—</span><span id="uploaderChip">—</span></div><p id="description">—</p></div></div></div>
+          <div class="glass card progress-card"><div class="card-title"><h3>Download Progress</h3><span id="eta" class="eta">ETA: --</span></div><div class="progress-layout"><div class="ring"><span id="progressPct">0%</span></div><div class="progress-info"><b id="progressStatus">Waiting for a download...</b><div id="fileName" class="muted truncate">—</div><div class="bar"><span id="progressBar"></span></div><div class="progress-meta"><span id="progressSize">—</span><span id="progressSpeed">—</span><span id="progressEta">—</span></div></div></div><div class="progress-actions"><button id="pauseBtn" class="secondary-btn" disabled><i class="fa-solid fa-pause"></i> Pause</button><button id="cancelBtn" class="danger-btn" disabled><i class="fa-solid fa-xmark"></i> Cancel</button></div><div id="readyActions" class="ready-actions hidden"><a id="saveFileBtn" class="download-btn small-download" href="#">Save File</a><a id="playMediaBtn" class="secondary-btn" href="#" target="_blank">Play Media</a></div></div>
+        </div>
+        <div class="right-col">
+          <div class="glass card media-info"><div class="card-title"><h3>Media Info</h3><button class="ghost-btn" id="moreInfo">View More</button></div><div class="info-list"><div><span>Resolution</span><b id="infoResolution">—</b></div><div><span>Quality</span><b id="infoQuality">—</b></div><div><span>Frame Rate</span><b id="infoFps">—</b></div><div><span>Video Codec</span><b id="infoVcodec">—</b></div><div><span>Audio Codec</span><b id="infoAcodec">—</b></div><div><span>Duration</span><b id="infoDuration">—</b></div><div><span>File Size</span><b id="infoSize">—</b></div><div><span>Bitrate</span><b id="infoBitrate">—</b></div></div></div>
+          <div class="glass card"><div class="card-title"><h3>Quick Actions</h3></div><div class="quick-grid"><button onclick="showSection('downloads')"><i class="fa-regular fa-folder-open"></i>Open Folder</button><button id="copyBtn"><i class="fa-solid fa-link"></i>Copy Link</button><button id="openBtn"><i class="fa-solid fa-up-right-from-square"></i>Show in Explorer</button><button id="playBtn"><i class="fa-solid fa-play"></i>Play Media</button><button id="mp3Btn"><i class="fa-solid fa-music"></i>Convert to MP3</button><button id="favoriteBtn"><i class="fa-regular fa-heart"></i>Favorite</button><button id="shareBtn"><i class="fa-solid fa-share-nodes"></i>Share</button><button id="deleteCurrentBtn" class="danger-tile"><i class="fa-regular fa-trash-can"></i>Delete</button></div></div>
+        </div>
+      </div>
+
+      <div class="grid-two lower"><div class="glass card"><div class="card-title"><h3>Recent Downloads</h3><button class="ghost-btn" onclick="showSection('history')">View All</button></div><div id="recentList" class="recent-list"></div></div><div class="glass card"><div class="card-title"><h3>System Status</h3><button class="ghost-btn" id="checkStatus">Check</button></div><div id="statusList" class="status-list"><div><i class="fa-solid fa-circle"></i><span>yt-dlp</span><small>Downloader engine</small></div><div><i class="fa-solid fa-circle"></i><span>FFmpeg</span><small>Media processing</small></div><div><i class="fa-solid fa-circle"></i><span>Internet</span><small>Browser connection</small></div><div><i class="fa-solid fa-circle"></i><span>Storage</span><small>Local downloads</small></div></div></div></div>
+      <div class="footer glass">MediaFlow <span>•</span> Built with <i class="fa-solid fa-heart"></i> for a better media experience</div>
+    </section>
+
+    <section id="downloads" class="page-section glass card"><h1>Downloads</h1><p class="muted">Your local download workspace.</p><div id="downloadsList"></div></section>
+    <section id="history" class="page-section glass card"><div class="card-title"><div><h1>Download History</h1><p class="muted">Recent completed downloads stored in SQLite.</p></div><button class="secondary-btn" onclick="loadHistory()"><i class="fa-solid fa-rotate"></i> Refresh</button></div><div id="historyList"></div></section>
+    <section id="queue" class="page-section glass card"><h1>Download Queue</h1><p class="muted">URLs saved locally on this device.</p><div id="queueList"></div></section>
+    <section id="batch" class="page-section glass card"><h1>Batch Download</h1><p class="muted">Enter one authorized public URL per line.</p><textarea id="batchUrls" class="glass-input" rows="8" placeholder="https://...
+https://..."></textarea><button id="batchBtn" class="download-btn mt-3">Start Batch</button><div id="batchResult" class="mt-3"></div></section>
+    <section id="settings" class="page-section glass card"><h1>Settings</h1><div class="settings-grid"><label>Default quality<select id="settingQuality"><option value="best">Best Available</option><option value="2160p">4K</option><option value="1440p">1440p</option><option value="1080p">1080p</option><option value="720p">720p</option></select></label><label>Theme<select id="settingTheme"><option value="dark">Dark Glass</option><option value="light">Light</option></select></label><label class="switch-row">Skip duplicates<input id="skipDuplicates" type="checkbox"><span class="switch"></span></label><label class="switch-row">Animations<input id="animations" type="checkbox"><span class="switch"></span></label><label class="switch-row">Notifications<input id="notifications" type="checkbox"><span class="switch"></span></label></div><button id="saveSettings" class="download-btn mt-4">Save Settings</button></section>
+    <section id="tools" class="page-section glass card"><h1>Tools</h1><div class="tools-grid"><div><i class="fa-solid fa-music"></i><h3>Convert to MP3</h3><p>Convert a downloaded video to MP3 with FFmpeg.</p></div><div><i class="fa-solid fa-image"></i><h3>Extract Thumbnail</h3><p>Extract a frame from a local video.</p></div><div><i class="fa-solid fa-circle-info"></i><h3>Media Information</h3><p>Inspect resolution, codecs, FPS, duration and bitrate.</p></div></div></section>
+    <section id="youtube" class="page-section glass card"><h1>YouTube</h1><p class="muted">Paste a YouTube URL into the dashboard to analyze and download it.</p><button class="download-btn" onclick="showSection('dashboard');document.getElementById('urlInput').focus()">Open Downloader</button></section>
+    <section id="instagram" class="page-section glass card"><h1>Instagram</h1><p class="muted">Paste a public Instagram URL into the dashboard to analyze and download content you are authorized to save.</p><button class="download-btn" onclick="showSection('dashboard');document.getElementById('urlInput').focus()">Open Downloader</button></section>
+    <section id="about" class="page-section glass card"><h1>About MediaFlow</h1><p>MediaFlow is a local Flask application built around yt-dlp and FFmpeg. Platform extraction behavior can change over time; a JavaScript runtime may be required by yt-dlp for some current YouTube extraction paths.</p><div class="notice"><i class="fa-solid fa-shield-halved"></i> Use the application responsibly and only download media you have permission to download.</div></section>
+  </main>
+</div>
+<div id="toast" class="toast-box"></div>
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body></html>

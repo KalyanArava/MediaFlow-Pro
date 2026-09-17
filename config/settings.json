@@ -1,0 +1,10 @@
+{
+  "default_quality": "best",
+  "default_kind": "video",
+  "skip_duplicates": true,
+  "notifications": true,
+  "animations": true,
+  "theme": "dark",
+  "retries": 3,
+  "concurrent_tasks": 1
+}
