@@ -9,3 +9,6 @@ logs/
 *.part
 *.ytdl
 .DS_Store
+
+# Vercel build artifacts
+bin/

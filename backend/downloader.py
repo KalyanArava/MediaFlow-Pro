@@ -146,6 +146,10 @@ class DownloadManager:
                 import imageio_ffmpeg
                 opts['ffmpeg_location'] = imageio_ffmpeg.get_ffmpeg_exe()
 
+                deno_path = os.path.join(self.base, 'bin', 'deno')
+                if os.path.isfile(deno_path):
+                    opts['js_runtimes'] = [f'deno:{deno_path}']
+
             if kind in ('thumbnail', 'all'):
                 opts['writethumbnail'] = True
 
