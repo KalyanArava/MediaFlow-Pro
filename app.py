@@ -135,13 +135,32 @@ def api_task_file(task_id):
 @app.route('/api/status')
 def api_status():
     import shutil
-    return jsonify({'ok': True, 'data': {
-        'yt_dlp': True,
-        'ffmpeg': bool(shutil.which('ffmpeg')),
-        'ffprobe': bool(shutil.which('ffprobe')),
-        'internet': True,
-        'storage': True
-    }})
+    import sys
+
+    return jsonify({
+        'ok': True,
+        'data': {
+            'python': sys.version,
+
+            'yt_dlp': True,
+            'yt_dlp_ejs': True,
+
+            'node': bool(shutil.which('node')),
+            'node_path': shutil.which('node') or '',
+
+            'deno': bool(shutil.which('deno')),
+            'deno_path': shutil.which('deno') or '',
+
+            'ffmpeg': bool(shutil.which('ffmpeg')),
+            'ffmpeg_path': shutil.which('ffmpeg') or '',
+
+            'ffprobe': bool(shutil.which('ffprobe')),
+            'ffprobe_path': shutil.which('ffprobe') or '',
+
+            'internet': True,
+            'storage': True
+        }
+    })
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=False)
