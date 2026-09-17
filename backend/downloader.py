@@ -90,11 +90,17 @@ class DownloadManager:
         path = None
         try:
             self._update(tid, status='analyzing')
-            shared = os.path.expanduser('~/storage/shared')
-            if os.path.isdir(shared):
-                out_root = os.path.join(shared, 'Movies', 'MediaFlow')
+            # Choose a writable download directory.
+            # Vercel's application filesystem is read-only, so use /tmp.
+            if os.environ.get('VERCEL'):
+                out_root = os.path.join('/tmp', 'mediaflow', 'downloads')
             else:
-                out_root = os.path.join(self.base, 'downloads')
+                shared = os.path.expanduser('~/storage/shared')
+                if os.path.isdir(shared):
+                    out_root = os.path.join(shared, 'Movies', 'MediaFlow')
+                else:
+                    out_root = os.path.join(self.base, 'downloads')
+
             os.makedirs(out_root, exist_ok=True)
             p = platform if platform not in ('auto', '') else platform_for(url)
             folder_name = clean(p or 'Unknown')
