@@ -3,9 +3,7 @@
   "buildCommand": "python build.py",
   "functions": {
     "**/*.py": {
-      "includeFiles": [
-        "bin/deno"
-      ]
+      "includeFiles": "bin/deno"
     }
   }
 }
